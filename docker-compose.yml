@@ -10,13 +10,10 @@ services:
       interval: 2s
       timeout: 5s
       retries: 30
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - default
-      - dokploy-network
+      - internal
 
   server:
     build: .
@@ -36,14 +33,11 @@ services:
       db:
         condition: service_healthy
     networks:
-      - default
-      - dokploy-network
+      - internal
 
 volumes:
   pgdata:
   paperclip-data:
 
 networks:
-  default: {}
-  dokploy-network:
-    external: true
+  internal:
